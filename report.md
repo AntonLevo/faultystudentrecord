@@ -65,12 +65,16 @@ To address this vulnerability, implementing parameterized queries should help...
 ### cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
 
 # 2. Storing passwords with a hashing algorithm
-### # Example using the bcrypt library
-import bcrypt
+### import bcrypt 
 
 hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-# 3.
+# 3. File upload size policy
+
+### allowed_extensions = ['jpg', 'jpeg', 'png', 'pdf']
+if not file_name.lower().endswith(tuple(allowed_extensions)):
+### max_file_size = 5 * 1024 * 1024  # 5 MB in bytes
+
 # 4.
 
 ## GitHub Security Advisories
