@@ -18,33 +18,35 @@ The faulty student record system contains several security vulnerabilities such 
 
 Student Record System
 
-## Tested Version
-
-Not specified.
-
 ## Details
 
 # 1. SQL-injection vulnerability
-in the "login()" (Row 47) function there is no validation in the SQL queries done allowing an attacker to change the queries to hack the system.
+in the "login()" (Row 47) function there is no validation in the SQL queries done allowing an attacker to exploit the system by changing the queries.
+
 # 2. Passwords saved on a text file
-The file to store the passwords is a plain text file without any form of encryption. This could be fixed by implementing a hashing algorithm to secure the passwords.
+The file to store the passwords is a plain text file without any form of encryption. Anyone having access to the file could read it externally in any application. This could be fixed by implementing a hashing algorithm to secure the passwords.
+
 # 3. Lacking security considerations in the file upload 
-There is no proper validation or sanitization for file uploads. File size limiting is important to implement.
+There is no proper validation or sanitization for file uploads. File size limiting is important to implement to avoid attacks through unwanted file types or sizes.
+
 # 4. No session management
 The code doesn't handle user sessions well. After someone logs in successfully, there's no setup for secure session management using tokens or cookies. Proper management can help to stop others from taking over a session for unauthorized access.
 # 5. No HTTPS
 In an online deployment, there is no HTTPS encryption in the transmission between client and server.
+
 # 6. Lack of 2FA
-There is no support for two-factor authentication, if this was deployed in a cloud-based solution.
+There is no support for two-factor authentication, if this was deployed in a cloud-based solution. This could lead to user accounts getting stolen. 
+
 # 7. Limited password policy
 There are no requirements for the level of the passwords. A password requirement policy would reduce the risk of password-related attacks.
+
 There are also no fallbacks for brute-force attacks. 
 
 # 8. Insecure Input Handling
 The code doesn't check or clean up the information in the user's typing fields. This leaves a possibility for errors if the program doesn't recognize the inputs or worse, leads to malicious code being injected granting potential access to the system. 
-# 9. Potential Information Disclosure
-Once a student's picture is downloaded, this code allows the user to see the filename potentially exposing personal information. 
 
+# 9. Potential Information Disclosure
+Once a student's picture is downloaded, this code allows the user to see the filename and metadata potentially exposing personal information. (such as location tags etc.)
 
 
 ## PoC
@@ -56,9 +58,6 @@ Once a student's picture is downloaded, this code allows the user to see the fil
 [Impact]
 
 ## Remediation
-
-*Propose a remediation suggestion if you have one. Make it clear that this is just a suggestion, as the maintainer might have a better idea to fix the issue.*
-
 
 # 1. SQL injection vulnerability
 To address this vulnerability, implementing parameterized queries should help...
@@ -75,7 +74,11 @@ hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 if not file_name.lower().endswith(tuple(allowed_extensions)):
 ### max_file_size = 5 * 1024 * 1024  # 5 MB in bytes
 
-# 4.
+# 4. Session management
+Session management could be dealt with by implementing the use of tokens or cookies with the login. For example, the Flask-Session extension can be used on a server-side session to store data.
+
+# 5. HTTPS
+An SSL certificate for the domain in an online deployment will be crucial for protecting the data transmitted between the user and server. Some certificates may cost and some may be free to implement. 
 
 ## GitHub Security Advisories
 
@@ -101,4 +104,4 @@ If the project team responds and agrees the issue poses a security risk, we will
 
 Our disclosure deadline for publicly disclosing a vulnerability is: 90 days after the first report to the project team.
 
-We **appreciate the hard work** maintainers put into fixing vulnerabilities and understand that sometimes more time is required to properly address an issue. We want project maintainers to succeed and because of that we are always open to discuss our disclosure policy to fit your specific requirements, when warranted.
+We **appreciate the hard work** maintainers put into fixing vulnerabilities and understand that sometimes more time is required to properly address an issue. We want project maintainers to succeed and because of that, we are always open to discuss our disclosure policy to fit your specific requirements, when warranted.
