@@ -87,8 +87,7 @@ When you use a GitHub Security Advisory, you can request a CVE identification nu
 
 ## Credit
 
-*List all researchers who contributed to this disclosure.*
-*If you found the vulnerability with a specific tool, you can also credit this tool.*
+Anton Levo
 
 ## Contact
 
