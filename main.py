@@ -6,8 +6,6 @@ import hashlib
 conn = sqlite3.connect("students.db")
 cursor = conn.cursor()
 
-# ... (Previous code remains unchanged)
-
 # Function for login with parameterized query
 def login():
     while True:
@@ -67,7 +65,7 @@ def download_student_image():
     else:
         print("Student not found.")
 
-# Main method
+# Main
 def main():
     login()  # Login
     while True:
